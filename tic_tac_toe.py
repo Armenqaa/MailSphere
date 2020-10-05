@@ -23,11 +23,15 @@ class TicTacGame:
                     p[i][j] = 'O'
                 elif grid[i][j] == 1:
                     p[i][j] = 'X'
+
+        field = []
         for i in range(self.m):
-            summary_list = []
+            line = []
             for j in range(self.n):
-                summary_list.insert(j, p[i][j])
-            print('  '.join(summary_list))
+                line.insert(j, p[i][j])
+            field.append(' | '.join(line))
+
+        print(('\n' + '———' * self.n + '\n').join(field))
 
     def show_board(self):
         print(f"{self.player1}: {self.score_board[0]}")
