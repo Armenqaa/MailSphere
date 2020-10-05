@@ -1,13 +1,15 @@
 
 class TicTacGame:
-    m = 3
-    x = 0
-    y = 0
-    n = 3
-    player1 = ''
-    player2 = ''
-    counter = 0
-    score_board = [0, 0]
+
+    def __init__(self, m=3, n=3):
+        self.m = 3
+        self.n = 3
+        self.x = 0
+        self.y = 0
+        self.player1 = ''
+        self.player2 = ''
+        self.counter = 0
+        self.score_board = [0, 0]
 
     # def grid_size(self):
     #    print('Type size of field. First number - x size, second - y size:')
