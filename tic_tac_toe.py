@@ -1,55 +1,58 @@
-class TicTacGame:
-
-    def __init__(self, m=3, n=3):
-        self.m = 3
-        self.n = 3
-        self.x = 0
-        self.y = 0
+class TicTacToeGame:
+    """Classic tic tac toe game"""
+    def __init__(self, x_max=3, y_max=3):
+        self.x_max = x_max
+        self.y_max = y_max
+        self.x_coord = 0
+        self.y_coord = 0
         self.player1 = ''
         self.player2 = ''
         self.counter = 0
         self.score_board = [0, 0]
 
     def print_field(self, grid):
-        p = [[' '] * self.m for i in range(self.n)]
-        for i in range(self.m):
-            for j in range(self.n):
+        """Print tic tac toe game's field"""
+        print_list = [[' '] * self.x_max for i in range(self.y_max)]
+        for i in range(self.x_max):
+            for j in range(self.y_max):
                 if grid[i][j] == 0:
-                    p[i][j] = 'O'
+                    print_list[i][j] = 'O'
                 elif grid[i][j] == 1:
-                    p[i][j] = 'X'
+                    print_list[i][j] = 'X'
 
         field = []
-        for i in range(self.m):
+        for i in range(self.x_max):
             line = []
-            for j in range(self.n):
-                line.insert(j, p[i][j])
+            for j in range(self.y_max):
+                line.insert(j, print_list[i][j])
             field.append(' | '.join(line))
 
-        print(('\n' + '———' * self.n + '\n').join(field))
+        print(('\n' + '———' * self.y_max + '\n').join(field))
 
     def show_board(self):
+        """Print player's statistic"""
         print(f"{self.player1}: {self.score_board[0]}")
         print(f"{self.player2}: {self.score_board[1]}")
 
     def valid_input(self, grid, coord_str):
+        """Correct coordinate input"""
         if len(coord_str) != 3:
             return 0
-        else:
-            if coord_str[1] != ' ':
-                return 0
-            try:
-                x = int(coord_str[0])
-                y = int(coord_str[2])
-            except ValueError:
-                return 0
-            if grid[x - 1][y - 1] != -1:
-                return 2
-            self.x = x
-            self.y = y
-            return 1
+        if coord_str[1] != ' ':
+            return 0
+        try:
+            x_coord = int(coord_str[0])
+            y_coord = int(coord_str[2])
+        except ValueError:
+            return 0
+        if grid[x_coord - 1][y_coord - 1] != -1:
+            return 2
+        self.x_coord = x_coord
+        self.y_coord = y_coord
+        return 1
 
     def start_game(self):
+        """Tic tac toe start"""
         print('The game is starting. Please type your names:')
         print('Player one:')
         self.player1 = input()
@@ -62,8 +65,9 @@ class TicTacGame:
             print('Type x and y separated by a space')
             coord_str = input()
             ret = self.valid_input(grid, coord_str)
-            while ret == 0 or ret == 2 or self.x > self.m \
-                    or self.x < 1 or self.y > self.n or self.y < 1:
+            while ret == 0 or ret == 2 or self.x_coord > self.x_max or\
+                    self.x_coord < 1 or\
+                    self.y_coord > self.y_max or self.y_coord < 1:
                 if ret == 0:
                     print('Wrong input!')
                 else:
@@ -72,17 +76,19 @@ class TicTacGame:
                 ret = self.valid_input(grid, coord_str)
             if self.counter % 2 == 1:
                 print('X placed')
-                grid[self.x - 1][self.y - 1] = 1
+                grid[self.x_coord - 1][self.y_coord - 1] = 1
             else:
                 print('O placed')
-                grid[self.x - 1][self.y - 1] = 0
+                grid[self.x_coord - 1][self.y_coord - 1] = 0
             self.print_field(grid)
-            if self.check_winner(grid) == 1 or self.counter == self.m * self.n:
+            if self.check_winner(grid) == 1 or\
+                    self.counter == self.x_max * self.y_max:
                 if self.end_game() == 0:
                     break
                 grid = [[-1] * 3 for i in range(3)]
 
     def check_winner(self, grid):
+        """Scrolling through the field chooses the winner"""
         for x in range(3):
             if grid[x][1] >= 0 and grid[x][1] == grid[x][0] \
                     and grid[x][1] == grid[x][2]:
@@ -128,6 +134,7 @@ class TicTacGame:
         return 0
 
     def end_game(self):
+        """Some prints after the end of the game"""
         self.show_board()
         print('Game over. One more? y/n:')
         if input() == 'y':
@@ -137,5 +144,5 @@ class TicTacGame:
 
 
 if __name__ == '__main__':
-    game = TicTacGame()
+    game = TicTacToeGame()
     game.start_game()
