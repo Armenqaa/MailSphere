@@ -43,6 +43,7 @@ if __name__ == '__main__':
     cache.set('Patrick', 'James')
     cache.set('Walter', 'White')
     cache.get('Walter')
+    cache.get('Patrick')
     cache.set('Armen', 'Gevorkyan')
     print(cache.get('Jesse'))
     print(cache.get('Walter'))
