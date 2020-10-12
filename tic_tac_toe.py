@@ -1,3 +1,7 @@
+class ValidInputException(Exception):
+    pass
+
+
 class TicTacToeGame:
     """Classic tic tac toe game"""
     def __init__(self, x_max=3, y_max=3):
@@ -12,7 +16,7 @@ class TicTacToeGame:
 
     def print_field(self, grid):
         """Print tic tac toe game's field"""
-        print_list = [[' '] * self.x_max for i in range(self.y_max)]
+        print_list = [[' '] * self.x_max for _ in range(self.y_max)]
         for i in range(self.x_max):
             for j in range(self.y_max):
                 if grid[i][j] == 0:
@@ -34,22 +38,40 @@ class TicTacToeGame:
         print(f"{self.player1}: {self.score_board[0]}")
         print(f"{self.player2}: {self.score_board[1]}")
 
-    def valid_input(self, grid, coord_str):
+    def valid_input(self, grid):
         """Correct coordinate input"""
-        if len(coord_str) != 3:
-            return 0
-        if coord_str[1] != ' ':
-            return 0
-        try:
-            x_coord = int(coord_str[0])
-            y_coord = int(coord_str[2])
-        except ValueError:
-            return 0
-        if grid[x_coord - 1][y_coord - 1] != -1:
-            return 2
+        print('Type x and y separated by a space')
+        while 1:
+            try:
+                coord_str = input()
+                if len(coord_str) != 3:
+                    raise ValidInputException('Input is too long')
+                if coord_str[1] != ' ':
+                    raise ValidInputException('Wrong input')
+            except ValidInputException as VIE:
+                print(VIE)
+                continue
+            try:
+                x_coord = int(coord_str[0])
+                y_coord = int(coord_str[2])
+            except ValueError:
+                print('Not integer')
+                continue
+            try:
+                if x_coord > 3 or x_coord < 1 or y_coord > 3 or y_coord < 1:
+                    raise ValidInputException('Input coordinates should be between 1 and 3')
+            except ValidInputException as VIE:
+                print(VIE)
+                continue
+            try:
+                if grid[x_coord - 1][y_coord - 1] != -1:
+                    raise ValidInputException('Occupied field')
+            except ValidInputException as VIE:
+                print(VIE)
+                continue
+            break
         self.x_coord = x_coord
         self.y_coord = y_coord
-        return 1
 
     def start_game(self):
         """Tic tac toe start"""
@@ -59,21 +81,10 @@ class TicTacToeGame:
         print('Player two:')
         self.player2 = input()
         print("Let's go")
-        grid = [[-1] * 3 for i in range(3)]
+        grid = [[-1] * 3 for _ in range(3)]
         while 1:
             self.counter += 1
-            print('Type x and y separated by a space')
-            coord_str = input()
-            ret = self.valid_input(grid, coord_str)
-            while ret == 0 or ret == 2 or self.x_coord > self.x_max or\
-                    self.x_coord < 1 or\
-                    self.y_coord > self.y_max or self.y_coord < 1:
-                if ret == 0:
-                    print('Wrong input!')
-                else:
-                    print('Occupied field!')
-                coord_str = input()
-                ret = self.valid_input(grid, coord_str)
+            self.valid_input(grid)
             if self.counter % 2 == 1:
                 print('X placed')
                 grid[self.x_coord - 1][self.y_coord - 1] = 1
@@ -85,7 +96,7 @@ class TicTacToeGame:
                     self.counter == self.x_max * self.y_max:
                 if self.end_game() == 0:
                     break
-                grid = [[-1] * 3 for i in range(3)]
+                grid = [[-1] * 3 for _ in range(3)]
 
     def check_winner(self, grid):
         """Scrolling through the field chooses the winner"""
