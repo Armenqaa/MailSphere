@@ -9,8 +9,8 @@ class TicTacToeGame:
         self.y_max = y_max
         self.x_coord = 0
         self.y_coord = 0
-        self.player1 = ''
-        self.player2 = ''
+        self.player1 = 1
+        self.player2 = 2
         self.counter = 0
         self.score_board = [0, 0]
 
