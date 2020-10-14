@@ -19,8 +19,7 @@ class ICache:
             self.cache_dict[key][1] += 1
             return self.cache_dict[key][0]
         except KeyError:
-            print('Такого ключа не существует')
-            return ''
+            pass
 
     def set(self, key: str, value: str) -> None:
         if self.current_cache_size == self.max_cache_size:
@@ -31,8 +30,7 @@ class ICache:
     def delete(self, key: str) -> None:
         self.current_cache_size -= 1
         try:
-            self.cache_dict[key][0] = ''
-            self.cache_dict[key][1] = -1
+            del self.cache_dict[key]
         except KeyError:
             print('Такого ключа не существует')
 
