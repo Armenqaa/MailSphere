@@ -2,6 +2,8 @@
 ***
 ## Hometask 1
 + ***TicTacToe game with tests***
+`tic_tac_toe.py`
+`Tests/test_tic_tac_toe.py`
 
 ![](https://github.com/Armenqaa/MailSphere/blob/master/img/TicTacToe.jpg)
 ## Hometask 2
@@ -13,3 +15,5 @@
 >[1, 3, 4] == [8]
 
 + ***LRU cache with get priority***
+
+## Hometask 3
