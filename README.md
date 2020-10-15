@@ -2,8 +2,7 @@
 ***
 ## Hometask 1
 + ***TicTacToe game with tests*** `(tic_tac_toe.py, Tests/test_tic_tac_toe.py)`
-
-![](https://github.com/Armenqaa/MailSphere/blob/master/img/TicTacToe.jpg)
+![](https://github.com/Armenqaa/MailSphere/blob/master/img/tictactoe.gif)
 ## Hometask 2
 + ***Class list, operator overloading.*** `(class_list.py)`
 
