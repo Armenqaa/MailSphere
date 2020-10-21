@@ -47,12 +47,13 @@ class Worker:
 
     def connection(self):
         # подключение к дб
-        self.db_connection = pc.connect(database="python",
-                                        user="postgres",
-                                        password="69420A1X")
-
+        if self.db_connection is None:
+            self.db_connection = pc.connect(database="python",
+                                            user="postgres",
+                                            password="69420A1X")
         # курсор
-        self.db_cursor = self.db_connection.cursor()
+        if self.db_cursor is None:
+            self.db_cursor = self.db_connection.cursor()
 
     def create_table(self):
         """
@@ -121,7 +122,7 @@ class Worker:
         """
         Получение и вывод всех элементов таблицы
         """
-        self.db_cursor.execute(f'SELECT * FROM {self.table_name};')
+        self.db_cursor.execute(f'SELECT * FROM {self.table_name} ORDER BY id;')
         self.print()
 
     def drop(self):
@@ -136,8 +137,10 @@ class Worker:
         """
         Отключение от курсора и сервера
         """
-        self.db_cursor.close()
-        self.db_connection.close()
+        if not self.db_cursor.closed:
+            self.db_cursor.close()
+        if not self.db_connection.closed:
+            self.db_connection.close()
 
     def __del__(self):
         self.close()
@@ -149,8 +152,14 @@ class Worker:
 a = Worker()
 a.create_table()
 a.get_all()
-a.insert(name='Armen', age=1)
-a.insert(name='Armen', age=1, email='qwerty')
-a.insert(name='Oleg', age=1)
-a.get(age=4)
+a.insert(name='Armen', age=20)
+a.insert(name='Maria', age=19, email='qwerty@mail.ru')
+a.insert(name='Oleg', age=21)
+a.insert(name='Dmitriy', age=23, email='dmitriy99@yandex.ru')
+a.insert(name='Olga', age=18)
+a.insert(name='Artem', age=25)
+a.insert(name='Olga', age=19)
+a.get(age=19)
+a.update(['email', None], email='emailisnone')
+a.update(['id', 5], age=19)
 a.drop()
