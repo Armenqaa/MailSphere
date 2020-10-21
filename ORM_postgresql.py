@@ -1,4 +1,5 @@
 import psycopg2 as pc
+import prettytable
 
 
 # validation
@@ -39,12 +40,22 @@ class Worker:
     def create_table(self):
         self.connection()
         self.db_cursor.execute(f'CREATE TABLE IF NOT EXISTS {self.table_name}' +
-                               '(id INT PRIMARY KEY NOT NULL,' +
+                               '(id BIGSERIAL NOT NULL PRIMARY KEY,' +
                                'name VARCHAR(50) NOT NULL,' +
                                'age INT NOT NULL,' +
                                'email VARCHAR(50));')
-        print(f'Таблица {self.table_name} создана')
+        print(f'Таблица {self.table_name} готова к использованию')
         self.db_connection.commit()
+
+    def get_all(self):
+        self.db_cursor.execute(f'SELECT * FROM {self.table_name};')
+        description_list = []
+        for index, _ in enumerate(self.db_cursor.description):
+            description_list.append(self.db_cursor.description[index][0])
+        table = prettytable.PrettyTable(description_list)
+        for row in self.db_cursor:
+            table.add_row(row)
+        print(table)
 
     def drop(self):
         self.db_cursor.execute(f'DROP TABLE {self.table_name};')
@@ -63,4 +74,5 @@ class Worker:
 
 a = Worker()
 a.create_table()
-a.drop()
+a.get_all()
+# a.drop()
