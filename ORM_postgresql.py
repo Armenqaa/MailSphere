@@ -22,22 +22,6 @@ def basis_function(user_id, name, age, email):
     return selection_parameter
 
 
-# validation
-class PositiveInteger:
-    def __set_name__(self, owner, name):
-        self.name = name
-
-    def __get__(self, instance):
-        return instance.__dict__[self.name]
-
-    def __set__(self, instance, value):
-        if not isinstance(value, int):
-            raise ValueError('Нужно целое число')
-        elif value < 0:
-            raise ValueError('Нужно положительное число')
-        instance.__dict__[self.name] = value
-
-
 # main class
 class Worker:
 
