@@ -13,3 +13,6 @@
 
 + ***LRU cache with get priority*** `(LRU_cache_priority.py)`
 ## Hometask 3
++ ***ORM with PostgreSQL*** `(ORM_postgresql.py)`
+
+![](https://github.com/Armenqaa/MailSphere/blob/master/img/ORM_postgresql.jpg)
